@@ -1,1 +1,551 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LDL — Luminaries Development Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400&family=Noto+Serif+JP:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #1D3A6B;
+      --gold: #B8963E;
+      --cream: #F9F7F2;
+      --text: #1a1a1a;
+      --text-muted: #666;
+      --border: rgba(29,58,107,0.15);
+      --font-serif: 'EB Garamond', 'Noto Serif JP', Georgia, serif;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Inter', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-serif); color: var(--text); background: var(--cream); overflow-x: hidden; }
 
+    /* LANG SWITCH */
+    [data-lang] { display: none; }
+    body.lang-ja [data-lang="ja"] { display: block; }
+    body.lang-en [data-lang="en"] { display: block; }
+    body.lang-ja [data-lang-inline="ja"] { display: inline; }
+    body.lang-en [data-lang-inline="en"] { display: inline; }
+    [data-lang-inline] { display: none; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 4rem;
+      background: rgba(249,247,242,0.93);
+      backdrop-filter: blur(8px);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+    .nav-logo img { width: 40px; height: 40px; object-fit: contain; }
+    .nav-logo-text {
+      font-family: var(--font-display); font-size: 1.1rem; font-weight: 500;
+      color: var(--navy); letter-spacing: 0.18em;
+    }
+    .nav-right { display: flex; align-items: center; gap: 2.5rem; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-sans); font-size: 0.7rem; font-weight: 300;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--navy); text-decoration: none; opacity: 0.65; transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    /* LANG TOGGLE */
+    .lang-toggle {
+      display: flex; align-items: center;
+      border: 0.5px solid var(--border); border-radius: 20px; overflow: hidden;
+    }
+    .lang-btn {
+      font-family: var(--font-sans); font-size: 0.65rem; font-weight: 400;
+      letter-spacing: 0.1em; padding: 0.3rem 0.75rem; cursor: pointer;
+      border: none; background: transparent; color: var(--navy); opacity: 0.45;
+      transition: all 0.2s;
+    }
+    .lang-btn.active { background: var(--navy); color: #fff; opacity: 1; }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 8rem 2rem 5rem;
+    }
+    .hero-mark { margin-bottom: 2rem; animation: fadeUp 1s ease both; }
+    .hero-mark img { width: 110px; height: 110px; object-fit: contain; }
+    .hero-label {
+      font-family: var(--font-sans); font-size: 0.68rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--navy); opacity: 0.45; margin-bottom: 1.5rem;
+      animation: fadeUp 1s 0.1s ease both;
+    }
+    .hero-title {
+      font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 300; color: var(--navy); line-height: 1.15;
+      margin-bottom: 0.5rem; animation: fadeUp 1s 0.2s ease both;
+    }
+    .hero-title em { font-style: italic; color: var(--gold); }
+    .hero-rule {
+      width: 50px; height: 0.5px; background: var(--navy); opacity: 0.25;
+      margin: 1.8rem auto; animation: fadeUp 1s 0.3s ease both;
+    }
+    .hero-tagline {
+      font-family: var(--font-serif); font-size: 1.15rem; color: var(--navy);
+      opacity: 0.55; margin-bottom: 2rem; animation: fadeUp 1s 0.4s ease both;
+    }
+    .hero-desc {
+      max-width: 560px; font-size: 1.05rem; line-height: 1.9;
+      color: var(--navy); opacity: 0.65; animation: fadeUp 1s 0.5s ease both;
+    }
+
+    /* SECTION BASE */
+    .section-wrap { padding: 7rem 4rem; max-width: 1100px; margin: 0 auto; }
+    .section-full { padding: 7rem 4rem; }
+    .section-full .inner { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-family: var(--font-sans); font-size: 0.65rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400; color: var(--navy); line-height: 1.2; margin-bottom: 0.4rem;
+    }
+    .section-title-sub {
+      font-size: 0.85rem; color: var(--navy); opacity: 0.4;
+      margin-bottom: 2.5rem; letter-spacing: 0.06em;
+    }
+    .section-rule { width: 40px; height: 0.5px; background: var(--gold); margin-bottom: 3rem; }
+
+    /* ABOUT */
+    #about { border-top: 0.5px solid var(--border); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .about-text p { font-size: 1.05rem; line-height: 1.95; color: var(--text); opacity: 0.8; margin-bottom: 1.5rem; }
+    .about-stats { display: flex; flex-direction: column; gap: 2rem; padding-top: 0.5rem; }
+    .stat-item { border-left: 1.5px solid var(--gold); padding-left: 1.5rem; }
+    .stat-num { font-family: var(--font-display); font-size: 2.2rem; font-weight: 300; color: var(--navy); line-height: 1; margin-bottom: 0.3rem; }
+    .stat-label { font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase; }
+
+    /* METHOD */
+    #method { background: var(--navy); }
+    #method .section-label { color: var(--gold); }
+    #method .section-title { color: #fff; }
+    #method .section-title-sub { color: rgba(255,255,255,0.3); }
+    #method .section-rule { background: var(--gold); }
+    .method-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 3rem; }
+    .method-card { border-top: 0.5px solid rgba(255,255,255,0.18); padding-top: 2rem; }
+    .method-num { font-family: var(--font-display); font-size: 2.8rem; font-weight: 300; color: var(--gold); opacity: 0.35; line-height: 1; margin-bottom: 1rem; }
+    .method-name { font-family: var(--font-display); font-size: 1.4rem; color: #fff; margin-bottom: 0.25rem; }
+    .method-name-sub { font-size: 0.8rem; color: rgba(255,255,255,0.35); margin-bottom: 1rem; letter-spacing: 0.08em; }
+    .method-desc { font-size: 0.92rem; line-height: 1.85; color: rgba(255,255,255,0.58); }
+
+    /* ACTIVITIES */
+    #activities { border-top: 0.5px solid var(--border); }
+    .activity-list { display: flex; flex-direction: column; }
+    .activity-item {
+      display: grid; grid-template-columns: 120px 1fr; gap: 3rem;
+      padding: 2rem 0; border-bottom: 0.5px solid var(--border); align-items: start;
+    }
+    .activity-date { font-family: var(--font-sans); font-size: 0.72rem; letter-spacing: 0.1em; color: var(--text-muted); padding-top: 0.2rem; }
+    .activity-title { font-family: var(--font-serif); font-size: 1.1rem; color: var(--navy); margin-bottom: 0.4rem; }
+    .activity-detail { font-family: var(--font-sans); font-size: 0.78rem; color: var(--text-muted); }
+
+    /* NEWS */
+    #news { border-top: 0.5px solid var(--border); }
+    .news-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2.5rem; }
+    .news-card-img {
+      width: 100%; aspect-ratio: 16/10;
+      background: rgba(29,58,107,0.07);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.2rem;
+    }
+    .news-card-img img { width: 36px; opacity: 0.2; object-fit: contain; }
+    .news-date { font-family: var(--font-sans); font-size: 0.68rem; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 0.5rem; text-transform: uppercase; }
+    .news-title { font-family: var(--font-serif); font-size: 1.05rem; line-height: 1.6; color: var(--navy); margin-bottom: 0.5rem; }
+    .news-excerpt { font-family: var(--font-sans); font-size: 0.78rem; line-height: 1.7; color: var(--text-muted); }
+
+    /* CONTACT */
+    #contact { border-top: 0.5px solid var(--border); text-align: center; }
+    #contact .section-rule { margin: 0 auto 3rem; }
+    .contact-desc { font-size: 1.05rem; line-height: 1.9; color: var(--navy); opacity: 0.7; max-width: 480px; margin: 0 auto 2.5rem; }
+    .contact-email {
+      display: inline-block; font-family: var(--font-display); font-size: 1.4rem;
+      color: var(--navy); text-decoration: none;
+      border-bottom: 0.5px solid var(--gold); padding-bottom: 0.2rem;
+      transition: opacity 0.2s;
+    }
+    .contact-email:hover { opacity: 0.65; }
+
+    /* FOOTER */
+    footer {
+      border-top: 0.5px solid var(--border); padding: 2.5rem 4rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-logo { font-family: var(--font-display); font-size: 1rem; font-weight: 500; color: var(--navy); letter-spacing: 0.18em; opacity: 0.5; }
+    .footer-copy { font-family: var(--font-sans); font-size: 0.68rem; letter-spacing: 0.06em; color: var(--text-muted); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .section-wrap, .section-full { padding: 5rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .method-grid { grid-template-columns: 1fr; }
+      .news-grid { grid-template-columns: 1fr; }
+      .activity-item { grid-template-columns: 1fr; gap: 0.4rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body class="lang-ja">
+
+<nav>
+  <a href="#hero" class="nav-logo">
+    <svg width="38" height="42" viewBox="0 0 120 132" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="60.00" y1="14.00" x2="105.03" y2="40.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="14.00" x2="105.03" y2="92.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="14.00" x2="60.00" y2="118.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="14.00" x2="14.97" y2="92.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="14.00" x2="14.97" y2="40.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="40.00" x2="105.03" y2="92.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="40.00" x2="60.00" y2="118.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="40.00" x2="14.97" y2="92.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="40.00" x2="14.97" y2="40.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="92.00" x2="60.00" y2="118.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="92.00" x2="14.97" y2="92.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="92.00" x2="14.97" y2="40.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="118.00" x2="14.97" y2="92.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="118.00" x2="14.97" y2="40.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="14.97" y1="92.00" x2="14.97" y2="40.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<polygon points="60.00,14.00 105.03,40.00 105.03,92.00 60.00,118.00 14.97,92.00 14.97,40.00" fill="none" stroke="#1D3A6B" stroke-width="2.5"/><circle cx="60.00" cy="14.00" r="5" fill="#1D3A6B"/>
+<circle cx="105.03" cy="40.00" r="5" fill="#1D3A6B"/>
+<circle cx="105.03" cy="92.00" r="5" fill="#1D3A6B"/>
+<circle cx="60.00" cy="118.00" r="5" fill="#1D3A6B"/>
+<circle cx="14.97" cy="92.00" r="5" fill="#1D3A6B"/>
+<circle cx="14.97" cy="40.00" r="5" fill="#1D3A6B"/>
+<circle cx="60" cy="66" r="5.5" fill="#1D3A6B"/></svg>
+    <span class="nav-logo-text">LDL</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about"><span data-lang-inline="ja">概要</span><span data-lang-inline="en">About</span></a></li>
+      <li><a href="#method"><span data-lang-inline="ja">メソッド</span><span data-lang-inline="en">Method</span></a></li>
+      <li><a href="#activities"><span data-lang-inline="ja">実績</span><span data-lang-inline="en">Activities</span></a></li>
+      <li><a href="#news"><span data-lang-inline="ja">ニュース</span><span data-lang-inline="en">News</span></a></li>
+      <li><a href="#contact"><span data-lang-inline="ja">お問い合わせ</span><span data-lang-inline="en">Contact</span></a></li>
+    </ul>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('ja')">JP</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-mark"><svg width="110" height="121" viewBox="0 0 120 132" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="60.00" y1="14.00" x2="105.03" y2="40.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="14.00" x2="105.03" y2="92.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="14.00" x2="60.00" y2="118.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="14.00" x2="14.97" y2="92.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="14.00" x2="14.97" y2="40.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="40.00" x2="105.03" y2="92.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="40.00" x2="60.00" y2="118.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="40.00" x2="14.97" y2="92.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="40.00" x2="14.97" y2="40.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="92.00" x2="60.00" y2="118.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="92.00" x2="14.97" y2="92.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="92.00" x2="14.97" y2="40.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="118.00" x2="14.97" y2="92.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="118.00" x2="14.97" y2="40.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<line x1="14.97" y1="92.00" x2="14.97" y2="40.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/>
+<polygon points="60.00,14.00 105.03,40.00 105.03,92.00 60.00,118.00 14.97,92.00 14.97,40.00" fill="none" stroke="#1D3A6B" stroke-width="2.5"/><circle cx="60.00" cy="14.00" r="5" fill="#1D3A6B"/>
+<circle cx="105.03" cy="40.00" r="5" fill="#1D3A6B"/>
+<circle cx="105.03" cy="92.00" r="5" fill="#1D3A6B"/>
+<circle cx="60.00" cy="118.00" r="5" fill="#1D3A6B"/>
+<circle cx="14.97" cy="92.00" r="5" fill="#1D3A6B"/>
+<circle cx="14.97" cy="40.00" r="5" fill="#1D3A6B"/>
+<circle cx="60" cy="66" r="5.5" fill="#1D3A6B"/></svg></div>
+  <p class="hero-label">Luminaries Development Lab</p>
+
+  <div data-lang="ja">
+    <h1 class="hero-title">各界に、<em>パイオニア</em>を。</h1>
+    <div class="hero-rule"></div>
+    <p class="hero-tagline">ルミナリーズ開発研究所</p>
+    <p class="hero-desc">米国カリフォルニア大学バークレー校発。認知神経科学と認知心理学に基づく独自メソッドで、ビジネス・政治・アート・音楽、あらゆる分野にパイオニアを輩出する。</p>
+  </div>
+  <div data-lang="en">
+    <h1 class="hero-title">Pioneering <em>Excellence</em><br>Across Every Field</h1>
+    <div class="hero-rule"></div>
+    <p class="hero-tagline">各界に、パイオニアを。</p>
+    <p class="hero-desc">Founded at the University of California, Berkeley — developing the next generation of pioneers across business, politics, art, and beyond.</p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div id="about">
+  <div class="section-wrap">
+    <p class="section-label">About LDL</p>
+    <div data-lang="ja">
+      <h2 class="section-title">私たちについて</h2>
+      <p class="section-title-sub">About Luminaries Development Lab</p>
+    </div>
+    <div data-lang="en">
+      <h2 class="section-title">Our Mission</h2>
+      <p class="section-title-sub">ルミナリーズ開発研究所について</p>
+    </div>
+    <div class="section-rule"></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <div data-lang="ja">
+          <p>ルミナリーズ開発研究所（LDL）は、米国カリフォルニア大学バークレー校を発祥とする人材開発研究所です。ビジネス・政治・アート・音楽など、あらゆる分野において卓越したパイオニアを輩出することを使命としています。</p>
+          <p>認知神経科学・認知心理学に基づく独自メソッドで個人の生産性と潜在能力を最大化するとともに、それらを活用するうえで求められる高い倫理性の教育を核に据えています。</p>
+          <p>現在は小中高生を主な対象として講演活動を展開中。今後は社会人・企業へも対象を拡大予定です。</p>
+        </div>
+        <div data-lang="en">
+          <p>Luminaries Development Lab (LDL) is a human development research organization founded at the University of California, Berkeley, dedicated to producing exceptional pioneers across all fields — business, politics, arts, and music.</p>
+          <p>Our methodology draws from cognitive neuroscience and cognitive psychology to maximize individual productivity and latent potential, paired with rigorous ethics education as the moral foundation for excellence.</p>
+          <p>Currently active through lecture programs for K–12 students, LDL is expanding its reach to adult professionals and organizations worldwide.</p>
+        </div>
+      </div>
+      <div class="about-stats">
+        <div class="stat-item">
+          <div class="stat-num">UC Berkeley</div>
+          <div class="stat-label"><span data-lang-inline="ja">発足の地</span><span data-lang-inline="en">Founded at</span></div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">3</div>
+          <div class="stat-label"><span data-lang-inline="ja">教育の柱</span><span data-lang-inline="en">Core pillars</span></div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">K–12</div>
+          <div class="stat-label"><span data-lang-inline="ja">現在の主な対象</span><span data-lang-inline="en">Current focus</span></div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">∞</div>
+          <div class="stat-label"><span data-lang-inline="ja">対象分野</span><span data-lang-inline="en">Fields of impact</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- METHOD -->
+<div id="method">
+  <div class="section-full">
+    <div class="inner">
+      <p class="section-label">Methodology</p>
+      <div data-lang="ja">
+        <h2 class="section-title">教育メソッド</h2>
+        <p class="section-title-sub">The LDL Approach</p>
+      </div>
+      <div data-lang="en">
+        <h2 class="section-title">The LDL Approach</h2>
+        <p class="section-title-sub">教育メソッド</p>
+      </div>
+      <div class="section-rule"></div>
+      <div class="method-grid">
+        <div class="method-card">
+          <div class="method-num">01</div>
+          <div class="method-name"><span data-lang-inline="ja">認知神経科学</span><span data-lang-inline="en">Cognitive Neuroscience</span></div>
+          <div class="method-name-sub"><span data-lang-inline="ja">Cognitive Neuroscience</span><span data-lang-inline="en">認知神経科学</span></div>
+          <div data-lang="ja"><p class="method-desc">神経可塑性・集中力・実行機能に関する最新の研究を基に、脳の仕組みを理解し、より賢く・より高いパフォーマンスで働くための方法を教育します。</p></div>
+          <div data-lang="en"><p class="method-desc">Grounded in the latest research on neuroplasticity, focus, and executive function — we teach how the brain works to help individuals perform at peak levels.</p></div>
+        </div>
+        <div class="method-card">
+          <div class="method-num">02</div>
+          <div class="method-name"><span data-lang-inline="ja">認知心理学</span><span data-lang-inline="en">Cognitive Psychology</span></div>
+          <div class="method-name-sub"><span data-lang-inline="ja">Cognitive Psychology / 苫米地式コーチング</span><span data-lang-inline="en">認知心理学 / Tomabechi Method</span></div>
+          <div data-lang="ja"><p class="method-desc">行動・動機・マインドセットのエビデンスベースモデルを活用。苫米地式コーチング理論を採用し、エフィカシーの向上とゴール設定を通じて潜在能力を解放します。</p></div>
+          <div data-lang="en"><p class="method-desc">Applying evidence-based models of behavior and motivation — including the Tomabechi coaching method — to unlock each individual's highest potential through goal-setting and efficacy development.</p></div>
+        </div>
+        <div class="method-card">
+          <div class="method-num">03</div>
+          <div class="method-name"><span data-lang-inline="ja">倫理教育</span><span data-lang-inline="en">Ethics Education</span></div>
+          <div class="method-name-sub"><span data-lang-inline="ja">Ethics Education</span><span data-lang-inline="en">倫理教育</span></div>
+          <div data-lang="ja"><p class="method-desc">卓越した能力は、高い倫理性なしには完成しません。あらゆる分野で真の卓越を発揮するために必要な道徳的基盤を育成します。</p></div>
+          <div data-lang="en"><p class="method-desc">Extraordinary capability without integrity is incomplete. We cultivate the moral foundation necessary to wield excellence responsibly across every sphere of life.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ACTIVITIES -->
+<div id="activities">
+  <div class="section-wrap">
+    <p class="section-label">Activities</p>
+    <div data-lang="ja">
+      <h2 class="section-title">講演・活動実績</h2>
+      <p class="section-title-sub">Lectures & Programs</p>
+    </div>
+    <div data-lang="en">
+      <h2 class="section-title">Lectures & Programs</h2>
+      <p class="section-title-sub">講演・活動実績</p>
+    </div>
+    <div class="section-rule"></div>
+    <div class="activity-list">
+      <div class="activity-item">
+        <div class="activity-date">2025</div>
+        <div>
+          <div class="activity-title"><span data-lang-inline="ja">基調講演 — 可能性とパフォーマンスの科学</span><span data-lang-inline="en">Keynote — The Science of Potential and Performance</span></div>
+          <div class="activity-detail"><span data-lang-inline="ja">高校生対象プログラム · 東京</span><span data-lang-inline="en">High school program · Tokyo, Japan</span></div>
+        </div>
+      </div>
+      <div class="activity-item">
+        <div class="activity-date">2025</div>
+        <div>
+          <div class="activity-title"><span data-lang-inline="ja">ワークショップ — 集中力の科学</span><span data-lang-inline="en">Workshop — The Science of Focus for Students</span></div>
+          <div class="activity-detail"><span data-lang-inline="ja">中学生対象プログラム · 大阪</span><span data-lang-inline="en">Middle school program · Osaka, Japan</span></div>
+        </div>
+      </div>
+      <div class="activity-item">
+        <div class="activity-date">2024</div>
+        <div>
+          <div class="activity-title"><span data-lang-inline="ja">セミナー — 倫理と卓越性</span><span data-lang-inline="en">Seminar — Ethics and Excellence</span></div>
+          <div class="activity-detail"><span data-lang-inline="ja">小学生対象シリーズ · 京都</span><span data-lang-inline="en">Elementary school series · Kyoto, Japan</span></div>
+        </div>
+      </div>
+      <div class="activity-item">
+        <div class="activity-date">2024</div>
+        <div>
+          <div class="activity-title"><span data-lang-inline="ja">創設記念講演シリーズ</span><span data-lang-inline="en">Inaugural Lecture Series — LDL Launch</span></div>
+          <div class="activity-detail">UC Berkeley · California, USA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEWS -->
+<div id="news">
+  <div class="section-wrap">
+    <p class="section-label">News</p>
+    <div data-lang="ja">
+      <h2 class="section-title">ニュース</h2>
+      <p class="section-title-sub">Latest Updates</p>
+    </div>
+    <div data-lang="en">
+      <h2 class="section-title">Latest Updates</h2>
+      <p class="section-title-sub">ニュース</p>
+    </div>
+    <div class="section-rule"></div>
+    <div class="news-grid">
+      <div class="news-card">
+        <div class="news-card-img"><svg width="44" height="48" viewBox="0 0 120 132" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="60.00" y1="14.00" x2="105.03" y2="40.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="14.00" x2="105.03" y2="92.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="14.00" x2="60.00" y2="118.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="14.00" x2="14.97" y2="92.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="14.00" x2="14.97" y2="40.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="40.00" x2="105.03" y2="92.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="40.00" x2="60.00" y2="118.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="40.00" x2="14.97" y2="92.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="40.00" x2="14.97" y2="40.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="92.00" x2="60.00" y2="118.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="92.00" x2="14.97" y2="92.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="92.00" x2="14.97" y2="40.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="118.00" x2="14.97" y2="92.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="118.00" x2="14.97" y2="40.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="14.97" y1="92.00" x2="14.97" y2="40.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<polygon points="60.00,14.00 105.03,40.00 105.03,92.00 60.00,118.00 14.97,92.00 14.97,40.00" fill="none" stroke="#1D3A6B" stroke-width="2.5"/><circle cx="60.00" cy="14.00" r="5" fill="#1D3A6B"/>
+<circle cx="105.03" cy="40.00" r="5" fill="#1D3A6B"/>
+<circle cx="105.03" cy="92.00" r="5" fill="#1D3A6B"/>
+<circle cx="60.00" cy="118.00" r="5" fill="#1D3A6B"/>
+<circle cx="14.97" cy="92.00" r="5" fill="#1D3A6B"/>
+<circle cx="14.97" cy="40.00" r="5" fill="#1D3A6B"/>
+<circle cx="60" cy="66" r="5.5" fill="#1D3A6B"/></svg></div>
+        <p class="news-date">May 2025</p>
+        <div data-lang="ja"><h3 class="news-title">LDL、社会人向けプログラムの展開を発表</h3><p class="news-excerpt">小中高生向け講演活動の好評を受け、今年後半より企業・社会人向けプログラムを開始することを発表しました。</p></div>
+        <div data-lang="en"><h3 class="news-title">LDL Expands Program to Adult Professionals</h3><p class="news-excerpt">Following strong demand from the K–12 lecture series, LDL announces its first corporate program launching later this year.</p></div>
+      </div>
+      <div class="news-card">
+        <div class="news-card-img"><svg width="44" height="48" viewBox="0 0 120 132" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="60.00" y1="14.00" x2="105.03" y2="40.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="14.00" x2="105.03" y2="92.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="14.00" x2="60.00" y2="118.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="14.00" x2="14.97" y2="92.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="14.00" x2="14.97" y2="40.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="40.00" x2="105.03" y2="92.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="40.00" x2="60.00" y2="118.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="40.00" x2="14.97" y2="92.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="40.00" x2="14.97" y2="40.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="92.00" x2="60.00" y2="118.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="92.00" x2="14.97" y2="92.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="92.00" x2="14.97" y2="40.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="118.00" x2="14.97" y2="92.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="118.00" x2="14.97" y2="40.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="14.97" y1="92.00" x2="14.97" y2="40.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<polygon points="60.00,14.00 105.03,40.00 105.03,92.00 60.00,118.00 14.97,92.00 14.97,40.00" fill="none" stroke="#1D3A6B" stroke-width="2.5"/><circle cx="60.00" cy="14.00" r="5" fill="#1D3A6B"/>
+<circle cx="105.03" cy="40.00" r="5" fill="#1D3A6B"/>
+<circle cx="105.03" cy="92.00" r="5" fill="#1D3A6B"/>
+<circle cx="60.00" cy="118.00" r="5" fill="#1D3A6B"/>
+<circle cx="14.97" cy="92.00" r="5" fill="#1D3A6B"/>
+<circle cx="14.97" cy="40.00" r="5" fill="#1D3A6B"/>
+<circle cx="60" cy="66" r="5.5" fill="#1D3A6B"/></svg></div>
+        <p class="news-date">March 2025</p>
+        <div data-lang="ja"><h3 class="news-title">新研究：倫理性は卓越したパフォーマンスの基盤である</h3><p class="news-excerpt">道徳的発達と認知パフォーマンスの深い相互関係を探る最新の研究論文を発表しました。</p></div>
+        <div data-lang="en"><h3 class="news-title">New Research: Ethics as the Foundation of Peak Performance</h3><p class="news-excerpt">Our latest paper explores how moral development and cognitive performance are deeply intertwined.</p></div>
+      </div>
+      <div class="news-card">
+        <div class="news-card-img"><svg width="44" height="48" viewBox="0 0 120 132" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="60.00" y1="14.00" x2="105.03" y2="40.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="14.00" x2="105.03" y2="92.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="14.00" x2="60.00" y2="118.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="14.00" x2="14.97" y2="92.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="14.00" x2="14.97" y2="40.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="40.00" x2="105.03" y2="92.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="40.00" x2="60.00" y2="118.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="40.00" x2="14.97" y2="92.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="40.00" x2="14.97" y2="40.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="92.00" x2="60.00" y2="118.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="92.00" x2="14.97" y2="92.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="105.03" y1="92.00" x2="14.97" y2="40.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="118.00" x2="14.97" y2="92.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="60.00" y1="118.00" x2="14.97" y2="40.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<line x1="14.97" y1="92.00" x2="14.97" y2="40.00" stroke="#1D3A6B" stroke-width="0.9" opacity="0.55"/>
+<polygon points="60.00,14.00 105.03,40.00 105.03,92.00 60.00,118.00 14.97,92.00 14.97,40.00" fill="none" stroke="#1D3A6B" stroke-width="2.5"/><circle cx="60.00" cy="14.00" r="5" fill="#1D3A6B"/>
+<circle cx="105.03" cy="40.00" r="5" fill="#1D3A6B"/>
+<circle cx="105.03" cy="92.00" r="5" fill="#1D3A6B"/>
+<circle cx="60.00" cy="118.00" r="5" fill="#1D3A6B"/>
+<circle cx="14.97" cy="92.00" r="5" fill="#1D3A6B"/>
+<circle cx="14.97" cy="40.00" r="5" fill="#1D3A6B"/>
+<circle cx="60" cy="66" r="5.5" fill="#1D3A6B"/></svg></div>
+        <p class="news-date">January 2025</p>
+        <div data-lang="ja"><h3 class="news-title">講演参加者500名を達成</h3><p class="news-excerpt">国内各地の学校での講演活動が参加者500名を超えました。次世代への教育的インパクトが着実に広がっています。</p></div>
+        <div data-lang="en"><h3 class="news-title">LDL Lecture Series Reaches 500 Students</h3><p class="news-excerpt">A milestone as our K–12 lecture program reaches its 500th participant across schools in Japan.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact">
+  <div class="section-wrap" style="text-align:center;">
+    <p class="section-label">Contact</p>
+    <div data-lang="ja">
+      <h2 class="section-title">お問い合わせ</h2>
+      <p class="section-title-sub">Get in Touch</p>
+    </div>
+    <div data-lang="en">
+      <h2 class="section-title">Get in Touch</h2>
+      <p class="section-title-sub">お問い合わせ</p>
+    </div>
+    <div class="section-rule" style="margin: 0 auto 3rem;"></div>
+    <div data-lang="ja"><p class="contact-desc">講演依頼・研究協力・パートナーシップに関するお問い合わせは、下記メールアドレスまでお気軽にご連絡ください。</p></div>
+    <div data-lang="en"><p class="contact-desc">For lecture inquiries, research collaborations, or partnership opportunities — we would be glad to hear from you.</p></div>
+    <a href="mailto:contact@ldl.org" class="contact-email">contact@ldl.org</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">LDL</div>
+  <div class="footer-copy">© 2025 Luminaries Development Lab. All rights reserved.</div>
+</footer>
+
+<script>
+  function setLang(lang) {
+    document.body.className = 'lang-' + lang;
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.toLowerCase() === (lang === 'ja' ? 'jp' : 'en'));
+    });
+  }
+</script>
+</body>
+</html>
