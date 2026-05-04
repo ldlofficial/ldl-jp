@@ -127,6 +127,12 @@
     .stat-num { font-family: var(--font-display); font-size: 2.2rem; font-weight: 300; color: var(--navy); line-height: 1; margin-bottom: 0.3rem; }
     .stat-label { font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase; }
 
+    .mission-pillars { display: grid; grid-template-columns: repeat(3,1fr); gap: 3rem; }
+    .mission-pillar { border-top: 0.5px solid var(--border); padding-top: 2rem; }
+    .mission-num { font-family: var(--font-display); font-size: 2.8rem; font-weight: 300; color: var(--gold); opacity: 0.4; line-height: 1; margin-bottom: 1rem; }
+    .mission-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; color: var(--navy); margin-bottom: 1rem; font-style: italic; }
+    .mission-desc { font-size: 0.95rem; line-height: 1.85; color: var(--text); opacity: 0.7; }
+
     /* METHOD */
     #method { background: var(--navy); }
     #method .section-label { color: var(--gold); }
@@ -192,6 +198,7 @@
       .nav-links { display: none; }
       .section-wrap, .section-full { padding: 5rem 1.5rem; }
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .mission-pillars { grid-template-columns: 1fr; }
       .method-grid { grid-template-columns: 1fr; }
       .news-grid { grid-template-columns: 1fr; }
       .activity-item { grid-template-columns: 1fr; gap: 0.4rem; }
@@ -295,36 +302,30 @@
       <p class="section-title-sub">ルミナリーズ開発研究所について</p>
     </div>
     <div class="section-rule"></div>
-    <div class="about-grid">
-      <div class="about-text">
-        <div data-lang="ja">
-          <p>ルミナリーズ開発研究所（LDL）は、米国カリフォルニア大学バークレー校を発祥とする人材開発研究所です。ビジネス・政治・アート・音楽など、あらゆる分野において卓越したパイオニアを輩出することを使命としています。</p>
-          <p>認知神経科学・認知心理学に基づく独自メソッドで個人の生産性と潜在能力を最大化するとともに、それらを活用するうえで求められる高い倫理性の教育を核に据えています。</p>
-          <p>現在は小中高生を主な対象として講演活動を展開中。今後は社会人・企業へも対象を拡大予定です。</p>
-        </div>
-        <div data-lang="en">
-          <p>Luminaries Development Lab (LDL) is a human development research organization founded at the University of California, Berkeley, dedicated to producing exceptional pioneers across all fields — business, politics, arts, and music.</p>
-          <p>Our methodology draws from cognitive neuroscience and cognitive psychology to maximize individual productivity and latent potential, paired with rigorous ethics education as the moral foundation for excellence.</p>
-          <p>Currently active through lecture programs for K–12 students, LDL is expanding its reach to adult professionals and organizations worldwide.</p>
-        </div>
+    <div data-lang="ja">
+      <p style="font-size:1.05rem; line-height:1.95; color:var(--text); opacity:0.8; margin-bottom:3rem; max-width:640px;">ルミナリーズ開発研究所（LDL）は、米国カリフォルニア大学バークレー校を発祥とする人材開発研究所です。ビジネス・政治・アート・音楽など、あらゆる分野において卓越したパイオニアを輩出することを使命としています。</p>
+    </div>
+    <div data-lang="en">
+      <p style="font-size:1.05rem; line-height:1.95; color:var(--text); opacity:0.8; margin-bottom:3rem; max-width:640px;">Luminaries Development Lab (LDL) is a human development research organization founded at the University of California, Berkeley, dedicated to producing exceptional pioneers across all fields — business, politics, arts, and music.</p>
+    </div>
+    <div class="mission-pillars">
+      <div class="mission-pillar">
+        <div class="mission-num">01</div>
+        <div class="mission-title">Highly Efficacious</div>
+        <div data-lang="ja"><p class="mission-desc">自己能力への深い確信——エフィカシーを高め、いかなる目標も達成できるという内なる確信を育てる。</p></div>
+        <div data-lang="en"><p class="mission-desc">A profound belief in one's own capability — cultivating the inner conviction that any goal is within reach.</p></div>
       </div>
-      <div class="about-stats">
-        <div class="stat-item">
-          <div class="stat-num"><span data-lang-inline="ja">知育</span><span data-lang-inline="en">Intellectual</span></div>
-          <div class="stat-label"><span data-lang-inline="ja">Intellectual Development — メイン</span><span data-lang-inline="en">知育 — Primary focus</span></div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num"><span data-lang-inline="ja">徳育</span><span data-lang-inline="en">Moral</span></div>
-          <div class="stat-label"><span data-lang-inline="ja">Moral Development — メイン</span><span data-lang-inline="en">徳育 — Primary focus</span></div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num"><span data-lang-inline="ja">体育</span><span data-lang-inline="en">Physical</span></div>
-          <div class="stat-label"><span data-lang-inline="ja">Physical Development</span><span data-lang-inline="en">体育 — Physical Development</span></div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">∞</div>
-          <div class="stat-label"><span data-lang-inline="ja">対象分野</span><span data-lang-inline="en">Fields of impact</span></div>
-        </div>
+      <div class="mission-pillar">
+        <div class="mission-num">02</div>
+        <div class="mission-title">Highly Altruistic</div>
+        <div data-lang="ja"><p class="mission-desc">利他的な志——自分を超えた大きな目標を持ち、社会・世界に貢献することを根底に置く。</p></div>
+        <div data-lang="en"><p class="mission-desc">A purpose that extends beyond the self — driven by the desire to contribute meaningfully to society and the world.</p></div>
+      </div>
+      <div class="mission-pillar">
+        <div class="mission-num">03</div>
+        <div class="mission-title">Highly Passionate</div>
+        <div data-lang="ja"><p class="mission-desc">情熱の炎——真に情熱を持てる分野を見出し、その道で卓越し続けるエネルギーの源とする。</p></div>
+        <div data-lang="en"><p class="mission-desc">An unwavering passion — finding the field where one's energy burns brightest and channeling it into sustained excellence.</p></div>
       </div>
     </div>
   </div>
