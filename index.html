@@ -49,13 +49,17 @@
     .lang-btn { font-family: var(--font-sans); font-size: 0.65rem; font-weight: 400; letter-spacing: 0.1em; padding: 0.3rem 0.75rem; cursor: pointer; border: none; background: transparent; color: var(--navy); opacity: 0.45; transition: all 0.2s; }
     .lang-btn.active { background: var(--navy); color: #fff; opacity: 1; }
 
-    #hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 8rem 2rem 5rem; }
-    .hero-mark { margin-bottom: 2rem; animation: fadeUp 1s ease both; }
-    .hero-label { font-family: var(--font-sans); font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--navy); opacity: 0.45; margin-bottom: 1.5rem; animation: fadeUp 1s 0.1s ease both; }
-    .hero-title { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 300; color: var(--navy); line-height: 1.15; margin-bottom: 0.5rem; animation: fadeUp 1s 0.2s ease both; }
+    #hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 8rem 2rem 5rem; position: relative; overflow: hidden; }
+    .hero-bg-mark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; max-width: 960px; pointer-events: none; z-index: 0; }
+    .hero-mark { margin-bottom: 2rem; animation: fadeUp 1s ease both; position: relative; z-index: 1; }
+    .hero-label { font-family: var(--font-sans); font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--navy); opacity: 0.45; margin-bottom: 1.5rem; animation: fadeUp 1s 0.1s ease both; position: relative; z-index: 1; }
+    .hero-title { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 300; color: var(--navy); line-height: 1.15; margin-bottom: 0.5rem; animation: fadeUp 1s 0.2s ease both; position: relative; z-index: 1; }
     .hero-title em { font-style: italic; color: var(--gold); }
-    .hero-rule { width: 50px; height: 0.5px; background: var(--navy); opacity: 0.25; margin: 1.8rem auto; animation: fadeUp 1s 0.3s ease both; }
-    .hero-tagline { font-family: var(--font-serif); font-size: 1.15rem; color: var(--navy); opacity: 0.55; margin-bottom: 2rem; animation: fadeUp 1s 0.4s ease both; }
+    .hero-rule { width: 50px; height: 0.5px; background: var(--navy); opacity: 0.25; margin: 1.8rem auto; animation: fadeUp 1s 0.3s ease both; position: relative; z-index: 1; }
+    .hero-tagline { font-family: var(--font-serif); font-size: 1.15rem; color: var(--navy); opacity: 0.55; margin-bottom: 2.5rem; animation: fadeUp 1s 0.4s ease both; position: relative; z-index: 1; }
+    .hero-keywords { display: flex; align-items: center; gap: 1.2rem; animation: fadeUp 1s 0.5s ease both; position: relative; z-index: 1; }
+    .hero-keywords span { font-family: var(--font-sans); font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); opacity: 0.35; }
+    .hero-keywords .dot { opacity: 0.2; font-size: 0.5rem; }
     .hero-desc { max-width: 560px; font-size: 1.05rem; line-height: 1.9; color: var(--navy); opacity: 0.65; animation: fadeUp 1s 0.5s ease both; text-align: center; margin-left: auto; margin-right: auto; }
 
     .section-wrap { padding: 7rem 4rem; max-width: 1100px; margin: 0 auto; }
@@ -197,19 +201,119 @@
 
 <!-- HERO -->
 <section id="hero">
+  <!-- 背景ネットワーク -->
+  <div class="hero-bg-mark">
+    <svg viewBox="0 0 680 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#1D3A6B" fill="none" stroke-linecap="round">
+        <line x1="90" y1="55" x2="210" y2="90" stroke-width="0.6" opacity="0.12"/>
+        <line x1="90" y1="55" x2="170" y2="185" stroke-width="0.5" opacity="0.10"/>
+        <line x1="90" y1="55" x2="320" y2="45" stroke-width="0.5" opacity="0.09"/>
+        <line x1="210" y1="90" x2="320" y2="45" stroke-width="0.5" opacity="0.10"/>
+        <line x1="210" y1="90" x2="420" y2="75" stroke-width="0.6" opacity="0.11"/>
+        <line x1="210" y1="90" x2="340" y2="200" stroke-width="0.5" opacity="0.09"/>
+        <line x1="320" y1="45" x2="420" y2="75" stroke-width="0.5" opacity="0.09"/>
+        <line x1="320" y1="45" x2="340" y2="200" stroke-width="0.4" opacity="0.08"/>
+        <line x1="420" y1="75" x2="560" y2="110" stroke-width="0.6" opacity="0.12"/>
+        <line x1="420" y1="75" x2="590" y2="55" stroke-width="0.5" opacity="0.09"/>
+        <line x1="420" y1="75" x2="340" y2="200" stroke-width="0.5" opacity="0.09"/>
+        <line x1="560" y1="110" x2="590" y2="55" stroke-width="0.5" opacity="0.09"/>
+        <line x1="560" y1="110" x2="620" y2="210" stroke-width="0.6" opacity="0.11"/>
+        <line x1="560" y1="110" x2="480" y2="240" stroke-width="0.5" opacity="0.09"/>
+        <line x1="90" y1="55" x2="55" y2="190" stroke-width="0.5" opacity="0.10"/>
+        <line x1="55" y1="190" x2="170" y2="185" stroke-width="0.6" opacity="0.11"/>
+        <line x1="55" y1="190" x2="80" y2="330" stroke-width="0.5" opacity="0.09"/>
+        <line x1="55" y1="190" x2="200" y2="280" stroke-width="0.5" opacity="0.09"/>
+        <line x1="170" y1="185" x2="80" y2="330" stroke-width="0.5" opacity="0.10"/>
+        <line x1="170" y1="185" x2="200" y2="280" stroke-width="0.5" opacity="0.09"/>
+        <line x1="170" y1="185" x2="340" y2="200" stroke-width="0.5" opacity="0.09"/>
+        <line x1="80" y1="330" x2="55" y2="430" stroke-width="0.5" opacity="0.09"/>
+        <line x1="80" y1="330" x2="190" y2="390" stroke-width="0.6" opacity="0.11"/>
+        <line x1="55" y1="430" x2="190" y2="390" stroke-width="0.5" opacity="0.09"/>
+        <line x1="190" y1="390" x2="310" y2="430" stroke-width="0.6" opacity="0.11"/>
+        <line x1="620" y1="210" x2="630" y2="330" stroke-width="0.5" opacity="0.10"/>
+        <line x1="620" y1="210" x2="510" y2="200" stroke-width="0.6" opacity="0.11"/>
+        <line x1="620" y1="210" x2="480" y2="240" stroke-width="0.5" opacity="0.09"/>
+        <line x1="630" y1="330" x2="510" y2="200" stroke-width="0.5" opacity="0.09"/>
+        <line x1="630" y1="330" x2="590" y2="430" stroke-width="0.5" opacity="0.10"/>
+        <line x1="630" y1="330" x2="480" y2="380" stroke-width="0.6" opacity="0.11"/>
+        <line x1="590" y1="430" x2="480" y2="380" stroke-width="0.5" opacity="0.09"/>
+        <line x1="480" y1="380" x2="370" y2="430" stroke-width="0.6" opacity="0.11"/>
+        <line x1="510" y1="200" x2="420" y2="75" stroke-width="0.5" opacity="0.09"/>
+        <line x1="510" y1="200" x2="480" y2="240" stroke-width="0.5" opacity="0.09"/>
+        <line x1="310" y1="430" x2="370" y2="430" stroke-width="0.5" opacity="0.09"/>
+        <line x1="200" y1="280" x2="340" y2="200" stroke-width="0.5" opacity="0.09"/>
+        <line x1="200" y1="280" x2="310" y2="350" stroke-width="0.5" opacity="0.09"/>
+        <line x1="340" y1="200" x2="480" y2="240" stroke-width="0.5" opacity="0.09"/>
+        <line x1="340" y1="200" x2="310" y2="350" stroke-width="0.5" opacity="0.09"/>
+        <line x1="480" y1="240" x2="480" y2="380" stroke-width="0.5" opacity="0.09"/>
+        <line x1="480" y1="240" x2="310" y2="350" stroke-width="0.4" opacity="0.08"/>
+        <line x1="310" y1="350" x2="190" y2="390" stroke-width="0.5" opacity="0.09"/>
+        <line x1="310" y1="350" x2="480" y2="380" stroke-width="0.4" opacity="0.08"/>
+        <line x1="170" y1="185" x2="210" y2="90" stroke-width="0.4" opacity="0.07"/>
+        <line x1="510" y1="200" x2="560" y2="110" stroke-width="0.4" opacity="0.07"/>
+        <line x1="80" y1="330" x2="170" y2="185" stroke-width="0.4" opacity="0.07"/>
+      </g>
+      <g stroke="#B8963E" fill="none" stroke-linecap="round">
+        <line x1="90" y1="55" x2="210" y2="90" stroke-width="0.8" opacity="0.2"/>
+        <line x1="420" y1="75" x2="560" y2="110" stroke-width="0.8" opacity="0.18"/>
+        <line x1="55" y1="190" x2="80" y2="330" stroke-width="0.7" opacity="0.16"/>
+        <line x1="630" y1="330" x2="480" y2="380" stroke-width="0.7" opacity="0.16"/>
+        <line x1="190" y1="390" x2="310" y2="430" stroke-width="0.7" opacity="0.15"/>
+        <line x1="340" y1="200" x2="480" y2="240" stroke-width="0.6" opacity="0.14"/>
+        <line x1="200" y1="280" x2="310" y2="350" stroke-width="0.6" opacity="0.13"/>
+      </g>
+      <g fill="#1D3A6B">
+        <circle cx="320" cy="45" r="3" opacity="0.18"/>
+        <circle cx="55" cy="430" r="3" opacity="0.16"/>
+        <circle cx="590" cy="430" r="3.5" opacity="0.18"/>
+        <circle cx="590" cy="55" r="3" opacity="0.16"/>
+        <circle cx="90" cy="55" r="5" opacity="0.28"/>
+        <circle cx="210" cy="90" r="4.5" opacity="0.25"/>
+        <circle cx="420" cy="75" r="5" opacity="0.27"/>
+        <circle cx="560" cy="110" r="4.5" opacity="0.25"/>
+        <circle cx="620" cy="210" r="4.5" opacity="0.25"/>
+        <circle cx="630" cy="330" r="4" opacity="0.23"/>
+        <circle cx="480" cy="380" r="4.5" opacity="0.25"/>
+        <circle cx="370" cy="430" r="3.5" opacity="0.2"/>
+        <circle cx="310" cy="430" r="3.5" opacity="0.2"/>
+        <circle cx="190" cy="390" r="4.5" opacity="0.25"/>
+        <circle cx="80" cy="330" r="4" opacity="0.22"/>
+        <circle cx="55" cy="190" r="4" opacity="0.22"/>
+        <circle cx="170" cy="185" r="4" opacity="0.22"/>
+        <circle cx="510" cy="200" r="4" opacity="0.22"/>
+        <circle cx="340" cy="200" r="4" opacity="0.22"/>
+        <circle cx="480" cy="240" r="4" opacity="0.22"/>
+        <circle cx="200" cy="280" r="3.5" opacity="0.2"/>
+        <circle cx="310" cy="350" r="3.5" opacity="0.2"/>
+      </g>
+      <g fill="#B8963E">
+        <circle cx="90" cy="55" r="2.5" opacity="0.35"/>
+        <circle cx="420" cy="75" r="2.5" opacity="0.32"/>
+        <circle cx="480" cy="380" r="2.5" opacity="0.3"/>
+        <circle cx="340" cy="200" r="2" opacity="0.28"/>
+        <circle cx="480" cy="240" r="2" opacity="0.28"/>
+        <circle cx="620" cy="210" r="2" opacity="0.28"/>
+      </g>
+    </svg>
+  </div>
   <div class="hero-mark"><svg width="110" height="121" viewBox="0 0 120 132" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="60.00" y1="14.00" x2="105.03" y2="40.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/><line x1="60.00" y1="14.00" x2="105.03" y2="92.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/><line x1="60.00" y1="14.00" x2="60.00" y2="118.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/><line x1="60.00" y1="14.00" x2="14.97" y2="92.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/><line x1="60.00" y1="14.00" x2="14.97" y2="40.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/><line x1="105.03" y1="40.00" x2="105.03" y2="92.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/><line x1="105.03" y1="40.00" x2="60.00" y2="118.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/><line x1="105.03" y1="40.00" x2="14.97" y2="92.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/><line x1="105.03" y1="40.00" x2="14.97" y2="40.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/><line x1="105.03" y1="92.00" x2="60.00" y2="118.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/><line x1="105.03" y1="92.00" x2="14.97" y2="92.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/><line x1="105.03" y1="92.00" x2="14.97" y2="40.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/><line x1="60.00" y1="118.00" x2="14.97" y2="92.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/><line x1="60.00" y1="118.00" x2="14.97" y2="40.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/><line x1="14.97" y1="92.00" x2="14.97" y2="40.00" stroke="#8899BB" stroke-width="0.9" opacity="0.55"/><polygon points="60.00,14.00 105.03,40.00 105.03,92.00 60.00,118.00 14.97,92.00 14.97,40.00" fill="none" stroke="#1D3A6B" stroke-width="2.5"/><circle cx="60.00" cy="14.00" r="5" fill="#1D3A6B"/><circle cx="105.03" cy="40.00" r="5" fill="#1D3A6B"/><circle cx="105.03" cy="92.00" r="5" fill="#1D3A6B"/><circle cx="60.00" cy="118.00" r="5" fill="#1D3A6B"/><circle cx="14.97" cy="92.00" r="5" fill="#1D3A6B"/><circle cx="14.97" cy="40.00" r="5" fill="#1D3A6B"/><circle cx="60" cy="66" r="5.5" fill="#1D3A6B"/></svg></div>
   <p class="hero-label">Luminaries Development Lab</p>
   <div data-lang="ja">
     <h1 class="hero-title">各界に、<em>パイオニア</em>を。</h1>
     <div class="hero-rule"></div>
     <p class="hero-tagline">ルミナリーズ開発研究所</p>
-    <p class="hero-desc">米国カリフォルニア大学バークレー校発。認知神経科学と認知心理学に基づく独自メソッドで、ビジネス・政治・スポーツ・アート・スポーツ、あらゆる分野にパイオニアを輩出する。</p>
   </div>
   <div data-lang="en">
     <h1 class="hero-title">Pioneering <em>Excellence</em><br>Across Every Field</h1>
     <div class="hero-rule"></div>
     <p class="hero-tagline">各界に、パイオニアを。</p>
-    <p class="hero-desc">Founded at the University of California, Berkeley — developing the next generation of pioneers across business, politics, sports, art, and beyond.</p>
+  </div>
+  <div class="hero-keywords">
+    <span>Efficacious</span>
+    <span class="dot">·</span>
+    <span>Altruistic</span>
+    <span class="dot">·</span>
+    <span>Passionate</span>
   </div>
 </section>
 
